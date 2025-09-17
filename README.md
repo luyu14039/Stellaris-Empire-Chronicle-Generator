@@ -56,7 +56,7 @@
 在命令行中输入以下指令，程序会提示您输入帝国名称。
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate
+python stellaris_chronicle_generator_v0.02.py gamestate.txt
 ```
 
 程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:` 输入您帝国的名字后按回车即可。如果直接按回车，则使用默认名称。
@@ -67,10 +67,10 @@ python stellaris_chronicle_generator_v0.02.py gamestate
 
 ```
 # 示例 1: 简单名称
-python stellaris_chronicle_generator_v0.02.py gamestate 泰拉联邦
+python stellaris_chronicle_generator_v0.02.py gamestate.txt 泰拉联邦
 
 # 示例 2: 带空格的名称
-python stellaris_chronicle_generator_v0.02.py gamestate "地球联合政府"
+python stellaris_chronicle_generator_v0.02.py gamestate.txt "地球联合政府"
 ```
 
 ![事件描述示例](PIC/event_desc.png "示例事件卡片的弹出描述，显示事件标题、时间与简短说明")
@@ -204,7 +204,7 @@ Open a command line in the script's directory and run it in one of the following
 Run the script with the gamestate file as an argument. It will then prompt you for your empire's name.
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate
+python stellaris_chronicle_generator_v0.02.py gamestate.txt
 ```
 
 The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` Type your empire's name and press Enter.
