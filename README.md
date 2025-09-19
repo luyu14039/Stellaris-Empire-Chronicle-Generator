@@ -4,6 +4,15 @@
 	<a href="#zh">简体中文</a> | <a href="#en">English</a>
 </p>
 
+## 版本更新说明 (Changelog)
+
+- **v0.03 (2025-09-18)**
+	- 事件描述词典条目由 `42` 条扩展到 `87` 条（新增 `45` 条事件）。
+	- 新增：更多起源（origin）事件、危机/特殊事件代码（如化身危机、模组化、资源短缺等）。
+	- 新增：命令行支持年度标记过滤选项（可选择包含或过滤 `timeline_event_year` 年度标记条目）。
+	- 新增：运行时可通过命令行直接传入是否包含年度标记，支持非交互模式。
+	- 修正与增强：事件占位符处理和实体生成逻辑小幅改进，提高生成连贯性。
+
 ## 简体中文
 
 <a id="zh"></a>
@@ -38,7 +47,7 @@
 1. **定位存档文件夹**：通常位于您的“文档”目录下： `C:\Users\[您的用户名]\Documents\Paradox Interactive\Stellaris\save games\` 在文件夹中找到您想要的存档，它会是一个 `.sav` 文件。
 2. **解压存档**：将存档文件（例如 `my_empire.sav`）的后缀名从 `.sav` 修改为 `.zip`。
 3. **提取文件**：解压这个 `.zip` 文件，您会得到一个名为 `gamestate` 的文件。
-4. **放置文件**：将 `gamestate` 文件与本项目的 `stellaris_chronicle_generator_v0.02.py` 脚本放在同一个文件夹下。
+4. **放置文件**：将 `gamestate` 文件与本项目的 `stellaris_chronicle_generator_v0.03.py` 脚本放在同一个文件夹下。
 
 #### 2. 环境配置
 
@@ -51,39 +60,53 @@
 
 准备好后，通过命令行工具进入脚本所在的文件夹，然后根据您的需要选择以下一种方式运行。
 
-##### 方式一：交互式运行
+##### 方式一：交互式运行（默认）
 
-在命令行中输入以下指令，程序会提示您输入帝国名称。
-
-```
-python stellaris_chronicle_generator_v0.02.py gamestate
-```
-
-程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:` 输入您帝国的名字后按回车即可。如果直接按回车，则使用默认名称。
-
-##### 方式二：通过命令行参数运行
-
-如果您希望直接指定帝国名称，可以在命令中加入第二个参数。请注意，如果您的帝国名称包含空格，请用英文双引号 `""` 将其括起来。
+在命令行中输入以下指令，程序会提示您输入帝国名称并询问是否包含年度标记事件：
 
 ```
-# 示例 1: 简单名称
-python stellaris_chronicle_generator_v0.02.py gamestate 泰拉联邦
+python stellaris_chronicle_generator_v0.03.py gamestate
+```
 
-# 示例 2: 带空格的名称
-python stellaris_chronicle_generator_v0.02.py gamestate "地球联合政府"
+程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:`，随后会询问： `是否包含年度标记事件？(y/N):`。
+
+##### 方式二：通过命令行参数运行（非交互，适合脚本化运行）
+
+可用参数：
+- `<存档文件路径>`: 必需，指向解压得到的 `gamestate` 文件或导出的时间线文本。
+- `<帝国名称>`: 可选，直接设置玩家帝国名称（若包含空格请用引号）。
+- `<是否包含年度标记>`: 可选，取值 `yes|y|1|true` 表示包含年度标记；`no|n|0|false` 表示不包含年度标记。
+
+示例：
+
+```
+# 交互模式跳过提示（一次性输入帝国名和包含标记选项）
+python stellaris_chronicle_generator_v0.03.py gamestate "泰拉联邦" yes
+
+# 非交互仅指定帝国名（仍会使用默认包含年度标记，除非提供第三个参数）
+python stellaris_chronicle_generator_v0.03.py gamestate "地球联合政府"
+
+# 指定不包含年度标记（适合生成更紧凑的编年史）
+python stellaris_chronicle_generator_v0.03.py gamestate "地球联合政府" no
 ```
 
 ![事件描述示例](PIC/event_desc.png "示例事件卡片的弹出描述，显示事件标题、时间与简短说明")
 
 **图：事件卡片描述示例** — 该截图展示了时间线中事件卡片的弹出描述，便于贡献者和使用者理解编年史中每条记录对应的游戏内事件含义。
 
+![运行示例输出](PIC/example1.png "运行示例：生成的编年史片段输出截图")
+
+**运行示例说明**：上图展示了脚本运行后输出的编年史片段（含日期与事件摘要）
+
 ### 📜 输出结果 (Output)
 
-脚本成功运行后，会在当前文件夹下生成三个文件：
+脚本成功运行后，会在存档文件所在目录生成三个主要文件（与 v0.02 输出一致）：
 
-1. **`群星帝国编年史.txt`**: 您的帝国编年史主文件。
-2. **`动态生成实体设定.md`**: 记录了所有随机生成的AI帝国信息的详细设定集。
-3. **`生成统计.txt`**: 本次运行的统计数据，主要用于调试和开发。
+1. **`群星帝国编年史.txt`**: 您的帝国编年史主文件（已替换占位符）。
+2. **`动态生成实体设定.md`**: 记录了所有随机生成的 AI 帝国与种族的详细设定。
+3. **`生成统计.txt`**: 本次运行的统计数据，包含已识别/未识别事件、年度标记统计与生成实体统计。
+
+说明：v0.03 增加了对年度标记的计数与可选过滤，统计文件中会显示年度标记是否被包含或过滤。
 
 ### ⚠️ 目前的缺陷 (Current Limitations)
 
@@ -186,7 +209,7 @@ First, you need to extract the core game state file from your *Stellaris* save.
 1. **Locate Save Folder**: Navigate to your save games folder, typically found at: `C:\Users\[YourUsername]\Documents\Paradox Interactive\Stellaris\save games\` Find the desired `.sav` file within this folder.
 2. **Decompress Save**: Change the file extension from `.sav` to `.zip` (e.g., `my_empire.sav` -> `my_empire.zip`).
 3. **Extract File**: Unzip the file. You will find a file named `gamestate` inside.
-4. **Place File**: Move the `gamestate` file into the same directory as the `stellaris_chronicle_generator_v0.02.py` script.
+4. **Place File**: Move the `gamestate` file into the same directory as the `stellaris_chronicle_generator_v0.03.py` script.
 
 #### 2. Environment Setup
 
@@ -201,14 +224,39 @@ Open a command line in the script's directory and run it in one of the following
 
 ##### Mode 1: Interactive Mode
 
-Run the script with the gamestate file as an argument. It will then prompt you for your empire's name.
+Run the script with the gamestate file as an argument. It will prompt for your empire name and whether to include year markers:
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate
+python stellaris_chronicle_generator_v0.03.py gamestate
 ```
 
-The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` Type your empire's name and press Enter.
+The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` and then `Include year markers? (y/N):`.
 
 ![Event description example](PIC/event_desc.png "Popup event card description showing title, date and short note")
 
 Figure: Example event card description — this screenshot shows the popup that appears for timeline event cards, helping contributors and users map chronicle entries to in-game events.
+
+![Run Example Output](PIC/example1.png "Run example: snippet of generated chronicle output")
+
+Figure: Run example output
+
+##### Mode 2: Command-line Arguments (Non-interactive)
+
+You can run the script fully non-interactively by passing arguments. Parameters:
+
+- `<save_file_path>`: required, path to the extracted `gamestate` file or exported timeline text.
+- `<empire_name>`: optional, sets the player empire name directly (use quotes if it contains spaces).
+- `<include_year_markers>`: optional, accepts `yes|y|1|true` to include year-marker events; `no|n|0|false` to exclude them.
+
+Examples:
+
+```
+# Provide empire name and include year markers
+python stellaris_chronicle_generator_v0.03.py gamestate "Terra Federation" yes
+
+# Provide only the empire name (year markers default behavior applies unless third arg given)
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union"
+
+# Explicitly exclude year markers for a more compact chronicle
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union" no
+```
