@@ -65,7 +65,7 @@
 在命令行中输入以下指令，程序会提示您输入帝国名称并询问是否包含年度标记事件：
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate.txt
+python stellaris_chronicle_generator_v0.03.py gamestate.txt
 ```
 
 程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:`，随后会询问： `是否包含年度标记事件？(y/N):`。
@@ -73,18 +73,21 @@ python stellaris_chronicle_generator_v0.02.py gamestate.txt
 ##### 方式二：通过命令行参数运行（非交互，适合脚本化运行）
 
 可用参数：
-- `<存档文件路径>`: 必需，指向解压得到的 `gamestate.txt` 文件或导出的时间线文本。
+- `<存档文件路径>`: 必需，指向解压得到的 `gamestate` 文件或导出的时间线文本。
 - `<帝国名称>`: 可选，直接设置玩家帝国名称（若包含空格请用引号）。
 - `<是否包含年度标记>`: 可选，取值 `yes|y|1|true` 表示包含年度标记；`no|n|0|false` 表示不包含年度标记。
 
 示例：
 
 ```
-# 示例 1: 简单名称
-python stellaris_chronicle_generator_v0.02.py gamestate.txt 泰拉联邦
+# 交互模式跳过提示（一次性输入帝国名和包含标记选项）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "泰拉联邦" yes
 
-# 示例 2: 带空格的名称
-python stellaris_chronicle_generator_v0.02.py gamestate.txt "地球联合政府"
+# 非交互仅指定帝国名（仍会使用默认包含年度标记，除非提供第三个参数）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府"
+
+# 指定不包含年度标记（适合生成更紧凑的编年史）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府" no
 ```
 
 ![事件描述示例](PIC/event_desc.png "示例事件卡片的弹出描述，显示事件标题、时间与简短说明")
@@ -130,7 +133,7 @@ python stellaris_chronicle_generator_v0.02.py gamestate.txt "地球联合政府"
 例如："timeline_first_precursor": "太虚古迹_初见先驱者_里程碑_[玩家帝国]首次发现文明先驱"
 ```
 
-请在提交时尽量附上相关截图或存档片段（如能给出 `gamestate.txt` 中的原始事件行将更有帮助）。我们会审核后将其加入到事件库中。
+请在提交时尽量附上相关截图或存档片段（如能给出 `gamestate` 中的原始事件行将更有帮助）。我们会审核后将其加入到事件库中。
 
 ### 📜 开源声明（使用与著作权）
 
@@ -151,7 +154,7 @@ A Python script designed to parse *Stellaris* save files and generate a grand ch
 
 ![Timeline interface example](PIC/timeline.png "In-game Empire Timeline interface; year markers and paged event cards")
 
-Figure: In-game "Empire Timeline" interface — this project parses the `gamestate.txt` events behind this view and generates a chronological chronicle.
+Figure: In-game "Empire Timeline" interface — this project parses the `gamestate` events behind this view and generates a chronological chronicle.
 
 > **Language Support Note**: Currently, this project generates all chronicles and related files in **Simplified Chinese** only. Support for more languages is planned for future updates. We warmly welcome community forks and contributions for other language versions.
 
@@ -224,7 +227,7 @@ Open a command line in the script's directory and run it in one of the following
 Run the script with the gamestate file as an argument. It will prompt for your empire name and whether to include year markers:
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate.txt
+python stellaris_chronicle_generator_v0.03.py gamestate.txt
 ```
 
 The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` and then `Include year markers? (y/N):`.
@@ -232,3 +235,28 @@ The program will ask: `Please enter your empire name (press Enter to use the def
 ![Event description example](PIC/event_desc.png "Popup event card description showing title, date and short note")
 
 Figure: Example event card description — this screenshot shows the popup that appears for timeline event cards, helping contributors and users map chronicle entries to in-game events.
+
+![Run Example Output](PIC/example1.png "Run example: snippet of generated chronicle output")
+
+Figure: Run example output
+
+##### Mode 2: Command-line Arguments (Non-interactive)
+
+You can run the script fully non-interactively by passing arguments. Parameters:
+
+- `<save_file_path>`: required, path to the extracted `gamestate` file or exported timeline text.
+- `<empire_name>`: optional, sets the player empire name directly (use quotes if it contains spaces).
+- `<include_year_markers>`: optional, accepts `yes|y|1|true` to include year-marker events; `no|n|0|false` to exclude them.
+
+Examples:
+
+```
+# Provide empire name and include year markers
+python stellaris_chronicle_generator_v0.03.py gamestate "Terra Federation" yes
+
+# Provide only the empire name (year markers default behavior applies unless third arg given)
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union"
+
+# Explicitly exclude year markers for a more compact chronicle
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union" no
+```
