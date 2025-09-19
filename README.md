@@ -65,7 +65,7 @@
 在命令行中输入以下指令，程序会提示您输入帝国名称并询问是否包含年度标记事件：
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate
+python stellaris_chronicle_generator_v0.03.py gamestate.txt
 ```
 
 程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:`，随后会询问： `是否包含年度标记事件？(y/N):`。
@@ -80,11 +80,14 @@ python stellaris_chronicle_generator_v0.02.py gamestate
 示例：
 
 ```
-# 示例 1: 简单名称
-python stellaris_chronicle_generator_v0.02.py gamestate 泰拉联邦
+# 交互模式跳过提示（一次性输入帝国名和包含标记选项）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "泰拉联邦" yes
 
-# 示例 2: 带空格的名称
-python stellaris_chronicle_generator_v0.02.py gamestate "地球联合政府"
+# 非交互仅指定帝国名（仍会使用默认包含年度标记，除非提供第三个参数）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府"
+
+# 指定不包含年度标记（适合生成更紧凑的编年史）
+python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府" no
 ```
 
 ![事件描述示例](PIC/event_desc.png "示例事件卡片的弹出描述，显示事件标题、时间与简短说明")
@@ -224,7 +227,7 @@ Open a command line in the script's directory and run it in one of the following
 Run the script with the gamestate file as an argument. It will prompt for your empire name and whether to include year markers:
 
 ```
-python stellaris_chronicle_generator_v0.02.py gamestate
+python stellaris_chronicle_generator_v0.03.py gamestate.txt
 ```
 
 The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` and then `Include year markers? (y/N):`.
@@ -232,3 +235,28 @@ The program will ask: `Please enter your empire name (press Enter to use the def
 ![Event description example](PIC/event_desc.png "Popup event card description showing title, date and short note")
 
 Figure: Example event card description — this screenshot shows the popup that appears for timeline event cards, helping contributors and users map chronicle entries to in-game events.
+
+![Run Example Output](PIC/example1.png "Run example: snippet of generated chronicle output")
+
+Figure: Run example output
+
+##### Mode 2: Command-line Arguments (Non-interactive)
+
+You can run the script fully non-interactively by passing arguments. Parameters:
+
+- `<save_file_path>`: required, path to the extracted `gamestate` file or exported timeline text.
+- `<empire_name>`: optional, sets the player empire name directly (use quotes if it contains spaces).
+- `<include_year_markers>`: optional, accepts `yes|y|1|true` to include year-marker events; `no|n|0|false` to exclude them.
+
+Examples:
+
+```
+# Provide empire name and include year markers
+python stellaris_chronicle_generator_v0.03.py gamestate "Terra Federation" yes
+
+# Provide only the empire name (year markers default behavior applies unless third arg given)
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union"
+
+# Explicitly exclude year markers for a more compact chronicle
+python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union" no
+```
