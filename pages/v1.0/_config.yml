@@ -1,0 +1,19 @@
+# GitHub Pages配置
+# 如果需要自定义域名或其他设置，可以在这里配置
+
+# 网站标题
+title: 群星帝国编年史生成器
+description: 在线版 Stellaris Empire Chronicle Generator
+
+# GitHub Pages主题（可选）
+# theme: minima
+
+# 插件配置（如果需要）
+# plugins:
+#   - jekyll-feed
+
+# 排除文件
+exclude:
+  - README.md
+  - LICENSE
+  - .gitignore
