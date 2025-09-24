@@ -1,262 +1,262 @@
-# Stellaris Empire Chronicle Generator (群星帝国编年史生成器)
-
 <p align="center">
-	<a href="#zh">简体中文</a> | <a href="#en">English</a>
+  <strong><a href="#zh">简体中文</a> ｜ <a href="#en">English</a></strong>
 </p>
 
-## 版本更新说明 (Changelog)
+# Stellaris Empire Chronicle Generator（群星帝国编年史生成器）
 
-- **v0.03 (2025-09-18)**
-	- 事件描述词典条目由 `42` 条扩展到 `87` 条（新增 `45` 条事件）。
-	- 新增：更多起源（origin）事件、危机/特殊事件代码（如化身危机、模组化、资源短缺等）。
-	- 新增：命令行支持年度标记过滤选项（可选择包含或过滤 `timeline_event_year` 年度标记条目）。
-	- 新增：运行时可通过命令行直接传入是否包含年度标记，支持非交互模式。
-	- 修正与增强：事件占位符处理和实体生成逻辑小幅改进，提高生成连贯性。
+<p align="center">
+  <a href="https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/"><img alt="Online" src="https://img.shields.io/badge/Online-Pages-2088FF?logo=github"/></a>
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases"><img alt="Releases" src="https://img.shields.io/github/v/release/luyu14039/Stellaris-Empire-Chronicle-Generator?display_name=release&label=Releases"/></a>
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/issues"><img alt="Issues" src="https://img.shields.io/github/issues/luyu14039/Stellaris-Empire-Chronicle-Generator?label=Issues"/></a>
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/luyu14039/Stellaris-Empire-Chronicle-Generator?style=social"/></a>
+</p>
 
-## 简体中文
+<p align="center">
+  <a href="https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/">在线版</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases">Releases</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/issues">Issues</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/stargazers">Stars</a>
+</p>
 
 <a id="zh"></a>
-<p align="right">[切换到 English](#en)</p>
 
-![时间线界面示例](PIC/timeline.png "游戏内帝国时间线界面；左侧年份刻度与事件卡片可翻页")
+将《群星》(Stellaris) 存档中的时间线事件解析为一份可读的“帝国编年史”。v0.12 引入全新现代化 GUI、Windows 可执行文件（.exe），并上线无需安装即可使用的在线页面。
 
-**图：游戏内“帝国时间线”界面示例** — 本脚本解析的就是此界面背后的 `gamestate` 事件数据，生成按时间顺序排列的编年史。
+在线页面（推荐直接使用）：
+https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/
 
-一份用于解析《群星》(Stellaris) 游戏存档、并为您的玩家帝国生成一部宏大编年史的Python脚本。将您的游戏历程转化为史诗故事，与AI分享，创作属于您自己的银河传奇。
+> 纯前端运行，解析在本地浏览器完成，不上传你的文件。
+![alt text](PIC/网页解析器截图.jpeg)
+---
 
-> **语言支持说明**: 目前，本项目生成的编年史及相关文件内容均为 **简体中文**。我们计划在未来添加对更多语言的支持，同时也非常欢迎社区用户 Fork 本项目并贡献其他语言的版本。
+## 版本更新说明（Changelog）
 
-### 📖 源起 (Origin)
+- v0.12（2025-09-24）
+  - GUI 化：提供基于 `customtkinter` 的现代界面（日志、进度条、搜索、右键菜单、状态指示）。
+  - 发布 EXE：已在 Releases 提供打包好的 Windows 可执行文件，免 Python 环境即可使用。
+  - 手动/随机生成：解析时可选择“手动输入名称”或“随机生成”，覆盖帝国与星神兽名称等关键内容。
+  - 在线页面：发布 GitHub Pages 静态站点，可直接在浏览器内上传文本并生成结果，带时间轴可视化与下载。
+  - 细节：统计文件会记录未知星神兽代码，便于反馈补全；内置检查更新入口。
+- v0.03（2025-09-18）
+  - 扩充事件词典到 80+，覆盖更多起源/危机/特殊事件；新增年度标记过滤；优化占位符与实体生成逻辑。
 
-好不容易走了宇宙创生线一把，想拿去给Gemini写一个帝国史诗，结果找了一个晚上根本找不到提取时间线的代码，遂自己动手。
+### 发行说明（Releases）
 
-### ✨ 功能 (Features)
-
-- **存档解析**：深度解析《群星》存档中的 `gamestate` 文件，精确提取与玩家帝国相关的每一个时间线事件。
-- **编年史生成**：将解析出的事件按时间顺序排列，自动生成一份清晰、可读的帝国编年史 `.txt` 文件。
-- **动态帝国塑造**：为了增加故事的沉浸感，脚本会根据游戏中发生的事件（如战争、外交）动态地、随机地生成遭遇的AI帝国、堕落帝国等实体的详细设定，包括种族、思潮、政体等。
-- **AI设定导出**：将所有动态生成的AI帝国信息汇总成一个独立的 `.md` 文件，方便您了解这些“邻居”的背景故事，也为AI创作提供了丰富的素材。
-- **统计报告**：生成一份统计文件，包含已识别和未识别的事件代码，方便后续的开发和完善。
-
-### 🚀 使用方式 (How to Use)
-
-#### 1. 准备工作：提取存档文件
-
-您需要从《群星》的存档中提取出核心的游戏状态文件。
-
-1. **定位存档文件夹**：通常位于您的“文档”目录下： `C:\Users\[您的用户名]\Documents\Paradox Interactive\Stellaris\save games\` 在文件夹中找到您想要的存档，它会是一个 `.sav` 文件。
-2. **解压存档**：将存档文件（例如 `my_empire.sav`）的后缀名从 `.sav` 修改为 `.zip`。
-3. **提取文件**：解压这个 `.zip` 文件，您会得到一个名为 `gamestate` 的文件。
-4. **放置文件**：将 `gamestate` 文件与本项目的 `stellaris_chronicle_generator_v0.03.py` 脚本放在同一个文件夹下。
-
-#### 2. 环境配置
-
-本项目使用Python开发，无需安装任何第三方库。
-
-1. **安装 Python**: 如果您的电脑没有安装Python，请前往 [Python官方网站](https://www.python.org/downloads/) 下载并安装最新版本的 Python 3。在安装时，请务必勾选 `Add Python to PATH` 选项。
-2. **验证安装**: 打开命令行工具（如CMD或PowerShell），输入 `python --version` 并按回车。如果显示出版本号，则说明安装成功。
-
-#### 3. 运行脚本
-
-准备好后，通过命令行工具进入脚本所在的文件夹，然后根据您的需要选择以下一种方式运行。
-
-##### 方式一：交互式运行（默认）
-
-在命令行中输入以下指令，程序会提示您输入帝国名称并询问是否包含年度标记事件：
-
-```
-python stellaris_chronicle_generator_v0.03.py gamestate.txt
-```
-
-程序会提示： `请输入您的帝国名称（直接按回车使用默认名称'玩家帝国'）:`，随后会询问： `是否包含年度标记事件？(y/N):`。
-
-##### 方式二：通过命令行参数运行（非交互，适合脚本化运行）
-
-可用参数：
-- `<存档文件路径>`: 必需，指向解压得到的 `gamestate` 文件或导出的时间线文本。
-- `<帝国名称>`: 可选，直接设置玩家帝国名称（若包含空格请用引号）。
-- `<是否包含年度标记>`: 可选，取值 `yes|y|1|true` 表示包含年度标记；`no|n|0|false` 表示不包含年度标记。
-
-示例：
-
-```
-# 交互模式跳过提示（一次性输入帝国名和包含标记选项）
-python stellaris_chronicle_generator_v0.03.py gamestate.txt "泰拉联邦" yes
-
-# 非交互仅指定帝国名（仍会使用默认包含年度标记，除非提供第三个参数）
-python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府"
-
-# 指定不包含年度标记（适合生成更紧凑的编年史）
-python stellaris_chronicle_generator_v0.03.py gamestate.txt "地球联合政府" no
-```
-
-![事件描述示例](PIC/event_desc.png "示例事件卡片的弹出描述，显示事件标题、时间与简短说明")
-
-**图：事件卡片描述示例** — 该截图展示了时间线中事件卡片的弹出描述，便于贡献者和使用者理解编年史中每条记录对应的游戏内事件含义。
-
-![运行示例输出](PIC/example1.png "运行示例：生成的编年史片段输出截图")
-
-**运行示例说明**：上图展示了脚本运行后输出的编年史片段（含日期与事件摘要）
-
-### 📜 输出结果 (Output)
-
-脚本成功运行后，会在存档文件所在目录生成三个主要文件（与 v0.02 输出一致）：
-
-1. **`群星帝国编年史.txt`**: 您的帝国编年史主文件（已替换占位符）。
-2. **`动态生成实体设定.md`**: 记录了所有随机生成的 AI 帝国与种族的详细设定。
-3. **`生成统计.txt`**: 本次运行的统计数据，包含已识别/未识别事件、年度标记统计与生成实体统计。
-
-说明：v0.03 增加了对年度标记的计数与可选过滤，统计文件中会显示年度标记是否被包含或过滤。
-
-### ⚠️ 目前的缺陷 (Current Limitations)
-
-- **事件代码不全**：许多事件仍会显示为“未收录事件”。
-- **名称占位符**：游戏内的星球、星系、殖民地和领袖的名称目前还是占位符。
-- **AI帝国随机生成**：遭遇的AI帝国是随机生成的，与您在游戏中实际遇到的帝国并不完全一致。
-- **潜在Bug**：代码中可能还存在一些未被发现的解析错误或逻辑Bug。
-
-### 📅 更新计划 (Future Plans)
-
-- [ ] **补全事件代码**：持续收集并补充更多的事件代码及其描述。
-- [ ] **实装真实名称**：开发解析功能，读取并替换真实的名称。
-- [ ] **手动输入功能**：增加允许用户手动输入或修改AI帝国、星球等设定的功能。
+- 最新发布（Latest）：https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases/latest  
+  在 Latest 的 Assets 中下载 Windows 版 `.exe`（v0.12）。
+- 全部发布（All Releases）：https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases
 
 ---
 
-### 🔎 提交事件/描述补充的 Issue 格式（贡献指南）
+## 功能（Features）
 
-如果你希望为事件代码、事件标题或描述提供补充，请在 GitHub Issue 中按以下格式提交：
+- 存档时间线解析：识别 `timeline_events` 数据块，按日期排序，拼装自然语言说明。
+- 编年史生成：输出完整的“帝国编年史”文本（可选择是否包含年度标记）。
+- 两种生成模式：
+  - 随机生成：为遭遇的帝国/堕落帝国/星神兽等生成合理名称与设定，用于补全叙事。
+  - 手动输入：在解析后逐项引导输入自定义名称，尽量贴合你的实际存档内容。
+- 实体设定归档：将参与到编年史中的实体（帝国/堕落帝国/种族等）整理为 Markdown 设定档，便于后续创作引用。
+- 统计与提示：记录总事件数、年度标记统计，并收集未知星神兽代码，方便提交 Issue 补全。
+- GUI 与体验：现代化界面，运行日志/搜索、进度与阶段展示、一键打开输出目录、检查更新。
+- 在线页面：无需安装，浏览器即可解析、展示与下载；内置“文本/时间轴”双视图。
+
+---
+
+## 使用方式（三选一）
+
+### 方式 A：在线页面（最简便）
+
+- 打开：`https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/`
+- 选择生成模式（随机/手动），上传存档文本（.txt），点击生成；右侧可查看编年史与时间轴并下载。
+
+准备存档文本（.txt）的途径：
+- 从存档中提取 `gamestate` 后重命名为 `gamestate.txt`（见“准备存档文件”）。
+- 或使用你在游戏中导出的时间线文本（如果已有导出）。
+
+### 方式 B：Windows 可执行文件（免环境）
+
+- 前往本仓库 Releases 下载 v0.12 对应的 `.exe`。
+- 双击运行，按界面提示：选择存档文本、输出目录、玩家帝国名（可选）、是否包含年度标记，并选择“随机/手动”。
+- 运行完成后可一键打开输出目录查看结果。
+
+### 方式 C：源码运行（Python 3）
+
+- 文件：`最新版本源码/gui_stellaris_chronicle_generator_v0.12.py`
+- 依赖：`customtkinter`
+
+在 Windows PowerShell 中：
+
+```powershell
+# 安装依赖
+pip install --upgrade pip; pip install customtkinter
+
+# 运行 GUI（在仓库根目录或源码目录）
+python 最新版本源码/gui_stellaris_chronicle_generator_v0.12.py
+```
+
+> 历史的命令行版本请参阅 `历史版本/` 目录（如 v0.03）。
+
+---
+
+## 准备存档文件
+
+1. 定位存档目录：`C:\Users\<你的用户名>\Documents\Paradox Interactive\Stellaris\save games\...`，找到目标 `.sav`。
+2. 将 `.sav` 改后缀为 `.zip` 并解压，得到 `gamestate`。
+3. 在线页面建议将其重命名为 `gamestate.txt` 再上传；GUI/EXE 也推荐使用 `.txt` 后缀的文本文件以便选择识别。
+
+![时间线界面示例](PIC/timeline.png "游戏内帝国时间线界面；本项目生成对应的编年史文本")
+![事件描述示例](PIC/event_desc.png "示例事件卡片描述；词条来自内置事件映射表")
+
+---
+
+## 输出结果（Outputs）
+
+生成结束后，在你选择的输出目录会得到：
+- `群星帝国编年史.txt`：按时间顺序的完整编年史（占位符已处理）。
+- `动态生成实体设定.md`：本次生成/命名的帝国、堕落帝国、种族等详细设定汇总。
+- `生成统计.txt`：事件总数、年度标记包含/过滤统计、未知星神兽代码列表等。
+
+在线页面同样支持直接下载“编年史”文本，并内置“时间轴”可视化浏览。
+
+---
+
+## 已知问题（Known Limitations）
+
+- 事件映射未完全覆盖：尚未收录的事件会显示“未收录事件代码（definition）”。
+- 名称解析仍在完善：真实星系/星球/领袖名尚未全面从存档提取，部分需默认或手动输入。
+- 随机实体与实际可能有偏差：为保证叙事完整性会生成合乎设定的 AI/堕落帝国信息。
+- 在线版为纯前端：大文件或低性能设备下解析速度可能较慢。
+
+---
+
+## 更新计划（Roadmap）
+
+- 持续补全事件代码与描述映射，覆盖更多版本与 DLC。
+- 增强“真实名称”解析（星系/星球/领袖等），尽可能还原游玩细节。
+- 扩展手动输入项与校验，支持导入自定义名录/模板，改进可视化与多格式导出（Markdown/HTML）。
+
+---
+
+## 仓库结构（快速导览）
+
+- 最新 GUI 源码：`最新版本源码/gui_stellaris_chronicle_generator_v0.12.py`（版本信息见 `最新版本源码/version.py`）。
+- 历史命令行版本：`历史版本/`（如 `0.03/`）。
+- 在线页面静态资源：`pages/v1.0/`（`index.html`、`main.js`、`style.css`）。
+
+---
+
+## 贡献与反馈（Contributing）
+
+欢迎提交 Issue 补充“事件代码 ↔ 描述”的映射，或反馈统计文件中出现的“未知星神兽代码”。
+
+例如（键值对风格）：
 
 ```
-代码内容：<代码简称>_<事件标题>_<事件类型>_<详细描述>
-
-例如："timeline_first_precursor": "太虚古迹_初见先驱者_里程碑_[玩家帝国]首次发现文明先驱"
+"timeline_first_precursor": "太虚古迹_初见先驱者_里程碑_[玩家帝国]首次发现文明先驱"
 ```
 
-请在提交时尽量附上相关截图或存档片段（如能给出 `gamestate` 中的原始事件行将更有帮助）。我们会审核后将其加入到事件库中。
+建议附带：截图/`gamestate` 片段/发生日期，便于核对与收录。
 
-### 📜 开源声明（使用与著作权）
+---
 
-- 本脚本免费提供给玩家个人使用与学习，欢迎 Fork 并参与迭代开发。
-- 禁止将本脚本用于以牟利为目的的商业使用（包括但不限于直接销售或收费提供相关服务）。
-- 本代码之著作权归作者个人所有。若需商业使用或其它特别授权，请联系作者并获得书面许可。
+## 许可与声明（License & Usage）
 
-如果你喜欢这个项目，欢迎给我们一个 Star ⭐，这将极大鼓励我继续维护与改进。
+- 本项目免费供个人学习与非商业用途，欢迎 Fork 与二次开发。
+- 未经授权禁止用于盈利性商业用途（包含但不限于出售或收费服务）。
+- 版权归作者所有，商业或特殊授权请联系作者。
 
+如果觉得好用，请为仓库点个 Star ⭐，这会极大鼓励我继续维护与改进！
 
-
-## English
+---
 
 <a id="en"></a>
-<p align="right">[Switch to 简体中文](#zh)</p>
 
-A Python script designed to parse *Stellaris* save files and generate a grand chronicle for your player empire. Transform your gameplay into an epic saga, share it with AI, and create your own galactic legend.
+# Stellaris Empire Chronicle Generator
 
-![Timeline interface example](PIC/timeline.png "In-game Empire Timeline interface; year markers and paged event cards")
+<p align="center">
+  <a href="https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/">Online</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases">Releases</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/issues">Issues</a> ·
+  <a href="https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/stargazers">Stars</a>
+</p>
 
-Figure: In-game "Empire Timeline" interface — this project parses the `gamestate` events behind this view and generates a chronological chronicle.
+Turn Stellaris save timeline events into a readable “Empire Chronicle”. v0.12 ships a modern GUI, Windows `.exe` build, and a browser-based online version.
 
-> **Language Support Note**: Currently, this project generates all chronicles and related files in **Simplified Chinese** only. Support for more languages is planned for future updates. We warmly welcome community forks and contributions for other language versions.
+Online page: https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/  
+Runs fully in the browser (no file upload to server).
 
----
+## Changelog
 
-### 🔎 Issue submission format for event/description additions (Contribution Guide)
+- v0.12 (2025-09-24)
+  - Modern GUI (customtkinter), with logs, progress, search, context menu, status.
+  - Windows EXE in Releases, no Python required.
+  - Manual/Random inputs for empire & leviathan names during parsing.
+  - GitHub Pages online app with timeline visualization and download.
+  - Extra: stats include unknown leviathan codes; built-in update check.
+- v0.03 (2025-09-18)
+  - Expanded event map (80+), year-marker filter, improved placeholders/entities.
 
-If you'd like to contribute additional event codes, titles, or descriptions, please open a GitHub Issue using the format below:
+### Releases
 
-```
-CodeContent:<short_code>_<Event Title>_<Event Type>_<Detailed Description>
+- Latest: https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases/latest  
+  Download the Windows `.exe` from the Latest release assets (v0.12).
+- All: https://github.com/luyu14039/Stellaris-Empire-Chronicle-Generator/releases
 
-Example (key/value style): "timeline_first_precursor": "太虚古迹_初见先驱者_里程碑_[玩家帝国]首次发现文明先驱"
+## Features
 
-Example (natural): ElectricFlesh_FirstRobot_Milestone_2204.03.12, first completed large-scale autonomous robot project, triggered social structure changes.
-```
+- Parse `timeline_events` and produce chronological narrative text.
+- Chronicle generation with optional year markers.
+- Two modes:
+  - Random: auto-generate reasonable names/settings for empires/fallen empires/leviathans.
+  - Manual: guided inputs after parsing to match your actual save.
+- Entity settings export (Markdown) and statistics file (counts, year markers, unknown leviathans).
+- GUI UX: logs/search, progress & steps, open output dir, update check.
+- Online app: parse, view, download; text/timeline switch.
 
-Field guide:
-- **CodeContent / short_code**: A short identifier for quick recognition (e.g. `ElectricFlesh`).
-- **Event Title**: A concise title (e.g. `FirstRobot`).
-- **Event Type**: e.g. `Milestone`, `War`, `Diplomacy`, `Tech`, etc.
-- **Detailed Description**: Provide the date, effects and contextual notes to help us map the entry to the `gamestate` event.
+## How to Use (3 ways)
 
-Please attach screenshots or savefile snippets when possible (providing the original `gamestate` event line is most helpful). We will review and add accepted contributions to the event library.
+- Online: open the URL, pick mode (random/manual), upload `.txt` timeline (e.g., `gamestate.txt`), generate and download.
+- Windows EXE: get v0.12 `.exe` from Releases, run, follow the GUI.
+- From source: run `最新版本源码/gui_stellaris_chronicle_generator_v0.12.py` with `customtkinter` installed.
 
-### 📜 Open-source statement (Usage & Copyright)
+PowerShell example:
 
-- This script is provided free of charge for players' personal use and learning. Forks and collaborative development are welcome.
-- Commercial use for profit (including but not limited to selling the script or charging for related services) is prohibited without explicit written permission.
-- Copyright of this code belongs to the original author. For commercial or special licensing requests, please contact the author.
-
-If you enjoy this project, please give it a Star ⭐ on GitHub — it really helps and encourages further maintenance and improvements.
-
-### 📖 Origin
-
-After a thrilling playthrough with the "Cosmic Progenitor" , I wanted to document this unique experience and hand it over to an AI (like Gemini) to write a custom empire epic. However, after a thorough search, I found no existing tools that could conveniently extract the empire's timeline from a save file. So, I decided to build it myself.
-
-### ✨ Features
-
-- **Save File Parsing**: Deeply parses the `gamestate` file from *Stellaris* saves to accurately extract every timeline event related to the player's empire.
-- **Chronicle Generation**: Arranges the extracted events chronologically and automatically generates a clean, readable `.txt` file of the empire's chronicle.
-- **Dynamic Empire Forging**: To enhance immersion, the script dynamically and randomly generates detailed profiles for encountered AI empires, Fallen Empires, etc., based on in-game events like wars and diplomacy. These profiles include species, ethics, authority, and more.
-- **AI Profile Export**: Compiles all dynamically generated AI empire information into a separate `.md` file, providing rich background material for AI-assisted storytelling.
-- **Statistical Report**: Creates a statistics file listing both recognized and unrecognized event codes, facilitating future development and contributions.
-
-### 🚀 How to Use
-
-#### 1. Preparation: Extract the Save File
-
-First, you need to extract the core game state file from your *Stellaris* save.
-
-1. **Locate Save Folder**: Navigate to your save games folder, typically found at: `C:\Users\[YourUsername]\Documents\Paradox Interactive\Stellaris\save games\` Find the desired `.sav` file within this folder.
-2. **Decompress Save**: Change the file extension from `.sav` to `.zip` (e.g., `my_empire.sav` -> `my_empire.zip`).
-3. **Extract File**: Unzip the file. You will find a file named `gamestate` inside.
-4. **Place File**: Move the `gamestate` file into the same directory as the `stellaris_chronicle_generator_v0.03.py` script.
-
-#### 2. Environment Setup
-
-This project is built with standard Python and requires no external libraries.
-
-1. **Install Python**: If you don't have Python, download and install the latest Python 3 version from the [official Python website](https://www.python.org/downloads/). Ensure you check the box `Add Python to PATH` during installation.
-2. **Verify Installation**: Open a command-line tool (like CMD or PowerShell) and type `python --version`. If it displays a version number, you're all set.
-
-#### 3. Running the Script
-
-Open a command line in the script's directory and run it in one of the following ways.
-
-##### Mode 1: Interactive Mode
-
-Run the script with the gamestate file as an argument. It will prompt for your empire name and whether to include year markers:
-
-```
-python stellaris_chronicle_generator_v0.03.py gamestate.txt
+```powershell
+pip install --upgrade pip; pip install customtkinter
+python 最新版本源码/gui_stellaris_chronicle_generator_v0.12.py
 ```
 
-The program will ask: `Please enter your empire name (press Enter to use the default 'Player Empire'):` and then `Include year markers? (y/N):`.
+## Prepare Save File
 
-![Event description example](PIC/event_desc.png "Popup event card description showing title, date and short note")
+1) Find your `.sav` under `Documents/Paradox Interactive/Stellaris/save games/`  
+2) Rename to `.zip` and extract to get `gamestate`  
+3) Rename to `gamestate.txt` for the online app or select it in the GUI/EXE
 
-Figure: Example event card description — this screenshot shows the popup that appears for timeline event cards, helping contributors and users map chronicle entries to in-game events.
+## Outputs
 
-![Run Example Output](PIC/example1.png "Run example: snippet of generated chronicle output")
+- `群星帝国编年史.txt` — final chronicle
+- `动态生成实体设定.md` — entity settings (empires/fallen/species)
+- `生成统计.txt` — stats: totals, year markers, unknown leviathans
 
-Figure: Run example output
+## Known Limitations
 
-##### Mode 2: Command-line Arguments (Non-interactive)
+- Event map is incomplete; unknown definitions show as “unmapped”.
+- Real names (systems/planets/leaders) are not fully parsed yet.
+- Randomly generated entities may differ from your actual save.
+- Online version is fully client-side; very large files may be slower.
 
-You can run the script fully non-interactively by passing arguments. Parameters:
+## Roadmap
 
-- `<save_file_path>`: required, path to the extracted `gamestate` file or exported timeline text.
-- `<empire_name>`: optional, sets the player empire name directly (use quotes if it contains spaces).
-- `<include_year_markers>`: optional, accepts `yes|y|1|true` to include year-marker events; `no|n|0|false` to exclude them.
+- Expand event map and DLC coverage.
+- Improve real-name parsing and fidelity to saves.
+- More manual inputs, presets/templates, richer exports (Markdown/HTML).
 
-Examples:
+## Contributing & License
 
-```
-# Provide empire name and include year markers
-python stellaris_chronicle_generator_v0.03.py gamestate "Terra Federation" yes
+Issues and PRs are welcome. Please attach screenshots/save snippets when proposing new mappings.
 
-# Provide only the empire name (year markers default behavior applies unless third arg given)
-python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union"
+- Free for personal, non-commercial use.
+- Commercial use requires explicit permission.
+- © Author. See repository for details.
 
-# Explicitly exclude year markers for a more compact chronicle
-python stellaris_chronicle_generator_v0.03.py gamestate "Earth Union" no
-```
+If this helps you, a ⭐ on GitHub is greatly appreciated!
