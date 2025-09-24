@@ -26,7 +26,7 @@
 https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/
 
 > 纯前端运行，解析在本地浏览器完成，不上传你的文件。
-![alt text](PIC/网页解析器截图.jpeg)
+![在线版网页解析器截图](PIC/网页解析器截图.jpeg)
 ---
 
 ## 版本更新说明（Changelog）
@@ -78,6 +78,7 @@ https://luyu14039.github.io/Stellaris-Empire-Chronicle-Generator-pages/
 - 前往本仓库 Releases 下载 v0.12 对应的 `.exe`。
 - 双击运行，按界面提示：选择存档文本、输出目录、玩家帝国名（可选）、是否包含年度标记，并选择“随机/手动”。
 - 运行完成后可一键打开输出目录查看结果。
+![Windows EXE 软件截图](exe软件截图.png)
 
 ### 方式 C：源码运行（Python 3）
 
